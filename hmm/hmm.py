@@ -58,6 +58,8 @@ class HiddenMarkovModel:
                         fwd_gen, dtype=float
                         )
                     )
+                # print(forward_probabilities) 
+            # print(obs_state, np.max(i), self.hidden_states[np.argmax(i)])
         print(forward_probabilities)
         # Step- 
         fwd_hmm_seq = []
@@ -103,12 +105,12 @@ class HiddenMarkovModel:
 
 
 
+# mini dataset testing 
 mini_hmm=np.load('./data/mini_weather_hmm.npz')
 for i in mini_hmm.files:
     # print(i)
     # print(mini_hmm[i])
     pass
-
 mini_input=np.load('./data/mini_weather_sequences.npz')
 for i in mini_input.files:
     # print(i)
@@ -116,9 +118,21 @@ for i in mini_input.files:
     pass
 observation_state_sequence = mini_input["observation_state_sequence"]
 best_hidden_state_sequence = mini_input["best_hidden_state_sequence"]
-print(observation_state_sequence)
-print(best_hidden_state_sequence)
+# print(observation_state_sequence)
+# print(best_hidden_state_sequence)
 
+mini_hmm_forward = HiddenMarkovModel(
+    observation_states= mini_hmm["observation_states"],
+    hidden_states=mini_hmm["hidden_states"], 
+    prior_p=mini_hmm["prior_p"],
+    transition_p=mini_hmm["transition_p"],
+    emission_p = mini_hmm["emission_p"]
+    )
+# print(mini_hmm_forward.forward(input_observation_states= observation_state_sequence ) )
+
+
+
+# Full dataset testing
 full_hmm=np.load('./data/full_weather_hmm.npz')
 for i in full_hmm.files:
     # print(i)
@@ -128,17 +142,16 @@ for i in full_hmm.files:
 full_input=np.load('./data/full_weather_sequences.npz')
 for i in full_input.files:
     # print(i)
-    # print(full_input[i])
+    print(full_input[i])
     pass
+observation_state_sequence = full_input["observation_state_sequence"]
+best_hidden_state_sequence = full_input["best_hidden_state_sequence"]
 
-
-hmm_forward = HiddenMarkovModel(
-    observation_states= mini_hmm["observation_states"],
-    hidden_states=mini_hmm["hidden_states"], 
-    prior_p=mini_hmm["prior_p"],
-    transition_p=mini_hmm["transition_p"],
-    emission_p = mini_hmm["emission_p"]
+full_hmm_forward = HiddenMarkovModel(
+    observation_states= full_hmm["observation_states"],
+    hidden_states=full_hmm["hidden_states"], 
+    prior_p=full_hmm["prior_p"],
+    transition_p=full_hmm["transition_p"],
+    emission_p = full_hmm["emission_p"]
     )
-
-# print(hmm_forward.forward(input_observation_states= hmm_forward.observation_states))
-print(hmm_forward.forward(input_observation_states= observation_state_sequence ) )
+print(full_hmm_forward.forward(input_observation_states= observation_state_sequence ) )
