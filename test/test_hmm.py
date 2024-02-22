@@ -21,11 +21,18 @@ def test_mini_weather():
 
     mini_hmm=np.load('./data/mini_weather_hmm.npz')
     mini_input=np.load('./data/mini_weather_sequences.npz')
-    
 
-    # edit
-    # print(mini_hmm)
-   
+    observation_state_sequence = mini_input["observation_state_sequence"]
+    best_hidden_state_sequence = mini_input["best_hidden_state_sequence"]
+
+    mini_hmm_forward = HiddenMarkovModel(
+        observation_states= mini_hmm["observation_states"],
+        hidden_states=mini_hmm["hidden_states"], 
+        prior_p=mini_hmm["prior_p"],
+        transition_p=mini_hmm["transition_p"],
+        emission_p = mini_hmm["emission_p"]
+    )
+    mini_hmm_forward.forward(input_observation_states= observation_state_sequence )
     pass
 
 test_mini_weather()
