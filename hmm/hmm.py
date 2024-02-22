@@ -67,7 +67,7 @@ class HiddenMarkovModel:
             pass
         print(fwd_hmm_seq)
 
-        
+
         # Step 3. Return final probability 
         return np.sum(forward_probabilities[-1, :])
 
@@ -93,7 +93,7 @@ class HiddenMarkovModel:
         best_path = np.zeros(len(decode_observation_states))         
         
        
-       # Step 2. Calculate Probabilities
+        # Step 2. Calculate Probabilities
 
             
         # Step 3. Traceback 
