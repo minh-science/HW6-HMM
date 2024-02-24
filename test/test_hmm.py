@@ -50,7 +50,7 @@ def test_mini_weather():
     # assert output of viterbi is correct
     assert [i for i in mini_hmm.viterbi(observation_state_sequence)] == [j for j in best_hidden_state_sequence]
 
-    # edge case 
+    # edge case with occasionally dishonest casino
     edge_hmm = HiddenMarkovModel(
         observation_states= np.array(["T", "H"]),
         hidden_states= np.array(["F", "L"]), 
@@ -62,11 +62,10 @@ def test_mini_weather():
         )
     # the player is super lucky
     observation_state_sequence = np.array(["H", "H", "H", "H", "H", "H", "H"])
-    print(edge_hmm.viterbi(decode_observation_states= observation_state_sequence ) )
+    assert edge_hmm.viterbi(decode_observation_states= observation_state_sequence ) == ['F', 'F', 'F', 'F', 'F', 'F', 'F']
 
     # the coin is obviously loaded
     observation_state_sequence = np.array(["T", "T", "T", "T", "T", "T", "T"])
-    # print(edge_hmm.forward(input_observation_states=observation_state_sequence))
     assert edge_hmm.viterbi(decode_observation_states= observation_state_sequence ) == ['L', 'L', 'L', 'L', 'L', 'L', 'L']
 
 test_mini_weather()
