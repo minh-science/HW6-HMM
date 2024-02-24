@@ -49,8 +49,8 @@ Finally, please update your README with a brief description of your methods.
 ## Task List
 
 [TODO] Complete the HiddenMarkovModel Class methods  <br>
-  [ ] complete the `forward` function in the HiddenMarkovModelClass <br>
-  [ ] complete the `viterbi` function in the HiddenMarkovModelClass <br>
+  [X] complete the `forward` function in the HiddenMarkovModelClass <br>
+  [X] complete the `viterbi` function in the HiddenMarkovModelClass <br>
 
 [TODO] Unit Testing  <br>
   [ ] Ensure functionality on mini and full weather dataset <br>
@@ -58,7 +58,7 @@ Finally, please update your README with a brief description of your methods.
 
 [TODO] Packaging <br>
   [ ] Update README with description of your methods <br>
-  [ ] pip installable module (optional)<br>
+  [X] pip installable module (optional)<br>
   [ ] github actions (install + pytest) (optional)
 
 

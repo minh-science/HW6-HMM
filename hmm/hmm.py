@@ -42,18 +42,13 @@ class HiddenMarkovModel:
         """        
         
         # Step 1. Initialize variables
-        print("observation states:", input_observation_states)
-        print("observation states dict:", self.observation_states_dict)
-        print("hidden states:", self.hidden_states)
-        print("transition matrix", self.transition_p)
-        print("emission matrix", self.emission_p)
-        print("hidden dict", self.hidden_states_dict)
+        # print("observation states:", input_observation_states)
+        # print("observation states dict:", self.observation_states_dict)
+        # print("hidden states:", self.hidden_states)
+        # print("transition matrix", self.transition_p)
+        # print("emission matrix", self.emission_p)
+        # print("hidden dict", self.hidden_states_dict)
         forward_probabilities = np.zeros( (len(input_observation_states), len(self.hidden_states))  )
-        # print((len(input_observation_states), len(self.hidden_states)))
-        # print(len(input_observation_states))
-        # print(len(self.observation_states))
-        # print(self.observation_states_dict)
-        # print(self.emission_p)
        
         # Step 2. Calculate probabilities
         for i, obs_state in enumerate(input_observation_states): # number and go through observation states
@@ -62,7 +57,6 @@ class HiddenMarkovModel:
                     forward_probabilities[i,j] = self.prior_p[j] * self.emission_p[j, self.observation_states_dict[obs_state]] # use prior to get emission probability
                 else:
                     # forward_probabilities[t, j] = np.sum(forward_probabilities[t - 1, i] * self.transition_p[i, j] * self.emission_p[j, self.observation_states_dict[obs]] for i in range(len(self.hidden_states)))
-                    print(j, obs_state, self.observation_states_dict[obs_state] )
                     emission_component = self.emission_p[j, self.observation_states_dict[obs_state] ] 
 
                     # transition_component = self.transition_p[j, self.observation_states_dict[obs_state]]
@@ -75,21 +69,15 @@ class HiddenMarkovModel:
                         fwd_gen, dtype=float
                         )
                     )
-            # print(forward_probabilities) 
-            # print(self.hidden_states)
-            print(forward_probabilities[i], np.max(forward_probabilities[i]), self.hidden_states[np.argmax(forward_probabilities[i])])
-        print(forward_probabilities)
         # Step- 
         fwd_hmm_seq = []
         for row in forward_probabilities: # transpose matrix, get columns of original matrix (rows of transpose matrix)
-            print(row, np.max(row), self.hidden_states[np.argmax(row)])
+            # print(row, np.max(row), self.hidden_states[np.argmax(row)])
             fwd_hmm_seq.append(self.hidden_states[np.argmax(row)])
             pass
-        print(fwd_hmm_seq)
 
 
         # Step 3. Return final probability 
-        print("transition matrix:", transition_p)
         return np.sum(forward_probabilities[-1, :])
 
 
@@ -118,17 +106,16 @@ class HiddenMarkovModel:
        
         # Step 2. Calculate Probabilities
         for i, obs_state in enumerate(decode_observation_states):  
-            print(f"observation {i}:", obs_state)
+            # print(f"observation {i}:", obs_state)
             for j, hidden_state in enumerate(self.hidden_states):
-                print("this is the emission", self.emission_p[j])
+                # print("this is the emission", self.emission_p[j])
                 # print("hidden state:",j,hidden_state)
                 if i == 0: # initialize viterbi state 0 
-                    print("this is the prior", self.prior_p)
-                    # print(i,j)
+                    # print("this is the prior", self.prior_p)
                     # print(self.emission_p[i,j])
                     viterbi_table[i,j] = self.prior_p[i] * self.emission_p[i,j]
-                    print(self.emission_p)
-        print(viterbi_table)
+                    # print(self.emission_p)
+        # print(viterbi_table)
 
 
 
@@ -138,7 +125,7 @@ class HiddenMarkovModel:
                     viterbi_table[i,j] = self.prior_p[j] * self.emission_p[j, self.observation_states_dict[obs_state]] # use prior to get emission probability
                 else:
                     # forward_probabilities[t, j] = np.sum(forward_probabilities[t - 1, i] * self.transition_p[i, j] * self.emission_p[j, self.observation_states_dict[obs]] for i in range(len(self.hidden_states)))
-                    print(j, obs_state, self.observation_states_dict[obs_state] )
+                    # print(j, obs_state, self.observation_states_dict[obs_state] )
                     emission_component = self.emission_p[j, self.observation_states_dict[obs_state] ] 
 
                     # transition_component = self.transition_p[j, self.observation_states_dict[obs_state]]
@@ -151,19 +138,17 @@ class HiddenMarkovModel:
                         fwd_gen, dtype=float
                         )
                     )
-            # print(forward_probabilities) 
-            # print(self.hidden_states)
-            print(viterbi_table[i], np.max(viterbi_table[i]), self.hidden_states[np.argmax(viterbi_table[i])])
-        print(viterbi_table)
+            # print(viterbi_table[i], np.max(viterbi_table[i]), self.hidden_states[np.argmax(viterbi_table[i])])
+        # print(viterbi_table)
         # Step- 
 
         # Step 3. Traceback 
         fwd_hmm_seq = []
         for row in viterbi_table: # transpose matrix, get columns of original matrix (rows of transpose matrix)
-            print(row, np.max(row), self.hidden_states[np.argmax(row)])
+            # print(row, np.max(row), self.hidden_states[np.argmax(row)])
             fwd_hmm_seq.append(self.hidden_states[np.argmax(row)])
             pass
-        print(fwd_hmm_seq)
+        # print(fwd_hmm_seq)
 
         # Step 4. Return best hidden state sequence 
         return fwd_hmm_seq
@@ -194,7 +179,7 @@ mini_hmm = HiddenMarkovModel(
 
 # print(mini_hmm.forward(input_observation_states= observation_state_sequence ) )
 
-print(mini_hmm.viterbi(decode_observation_states= observation_state_sequence ) )
+# print(mini_hmm.viterbi(decode_observation_states= observation_state_sequence ) )
 # print("best hidden state sequence:", best_hidden_state_sequence)
 
 
