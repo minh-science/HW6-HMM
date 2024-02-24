@@ -2,6 +2,9 @@
 
 In this assignment, you'll implement the Forward and Viterbi Algorithms (dynamic programming). 
 
+# DESCRIPTION OF METHODS
+The Forward and Viterbi algorithms are implementations of dynamic programming that return the most probable states given a series of observations described by a Hidden Markov Model. 
+
 
 # Assignment
 
@@ -57,9 +60,9 @@ Finally, please update your README with a brief description of your methods.
   [ ] Account for edge cases 
 
 [TODO] Packaging <br>
-  [ ] Update README with description of your methods <br>
+  [X] Update README with description of your methods <br>
   [X] pip installable module (optional)<br>
-  [ ] github actions (install + pytest) (optional)
+  [X] github actions (install + pytest) (optional)
 
 
 ## Completing the Assignment 
