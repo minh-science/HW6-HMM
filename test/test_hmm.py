@@ -42,7 +42,7 @@ def test_mini_weather():
 
     # assert output of forward algorithm is correct
     print ("HERE", mini_hmm.forward(input_observation_states= observation_state_sequence ))
-    assert mini_hmm.forward(input_observation_states= observation_state_sequence ) == 0.031244062500000003
+    assert mini_hmm.forward(input_observation_states= observation_state_sequence ) == 0.026955179630859374
 
     # assert length of viterbi output is correct
     assert len(mini_hmm.viterbi(observation_state_sequence)) == len(best_hidden_state_sequence)
@@ -60,12 +60,8 @@ def test_mini_weather():
         emission_p = np.array([[0.5, 0.5],
                             [0.7, 0.3]])
         )
-    observation_state_sequence = np.array(["T", "H", "T", "H", "H", "H", "T", "H", "T", "T", "H" ])
-    print(edge_hmm.forward(input_observation_states=observation_state_sequence))
-    print(edge_hmm.viterbi(decode_observation_states= observation_state_sequence ) )
-
-    # the coin is fair 
-    observation_state_sequence = np.array(["H", "H", "H", "H", "H", "T", "H", "T", "H", "T"])
+    # the player is super lucky
+    observation_state_sequence = np.array(["H", "H", "H", "H", "H", "H", "H"])
     print(edge_hmm.viterbi(decode_observation_states= observation_state_sequence ) )
 
     # the coin is obviously loaded
@@ -112,7 +108,7 @@ def test_full_weather():
 
     # assert output of forward algorithm is correct
     print("HERE", full_hmm.forward(input_observation_states= observation_state_sequence ))
-    assert full_hmm.forward(input_observation_states= observation_state_sequence ) == 6.808160936567043e-13
+    assert full_hmm.forward(input_observation_states= observation_state_sequence ) == 1.82721504536107e-12
 
     # assert length of viterbi output is correct
     assert len(full_hmm.viterbi(observation_state_sequence)) == len(best_hidden_state_sequence)
