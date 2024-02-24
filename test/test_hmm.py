@@ -25,15 +25,20 @@ def test_mini_weather():
     observation_state_sequence = mini_input["observation_state_sequence"]
     best_hidden_state_sequence = mini_input["best_hidden_state_sequence"]
 
-    mini_hmm_forward = HiddenMarkovModel(
+    mini_hmm = HiddenMarkovModel(
         observation_states= mini_hmm["observation_states"],
         hidden_states=mini_hmm["hidden_states"], 
         prior_p=mini_hmm["prior_p"],
         transition_p=mini_hmm["transition_p"],
         emission_p = mini_hmm["emission_p"]
     )
-    mini_hmm_forward.forward(input_observation_states= observation_state_sequence )
-    pass
+
+    # assert output of forward algorithm is correct
+    assert mini_hmm.forward(input_observation_states= observation_state_sequence ) == 0.62208
+
+    # assert output of viterbi is correct
+    assert [i for i in mini_hmm.viterbi(observation_state_sequence)] == [j for j in best_hidden_state_sequence]
+    
 
 test_mini_weather()
 
