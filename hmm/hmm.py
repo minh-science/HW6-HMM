@@ -58,7 +58,7 @@ class HiddenMarkovModel:
                     # forward_probabilities[t, j] = np.sum(forward_probabilities[t - 1, i] * self.transition_p[i, j] * self.emission_p[j, self.observation_states_dict[obs]] for i in range(len(self.hidden_states)))
                     emission_component = self.emission_p[j, self.observation_states_dict[obs_state] ] 
 
-                    transition_component = self.transition_p[j, self.observation_states_dict[obs_state]]
+                    # transition_component = self.transition_p[j, self.observation_states_dict[obs_state]]
                     
                     ij_transition =  emission_component #* transition_component
                     #  recursion step, looks at the previousforward probabilities
