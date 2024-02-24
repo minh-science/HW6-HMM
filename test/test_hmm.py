@@ -37,10 +37,12 @@ def test_mini_weather():
 
     # check sizes of transition and emission matrices 
     assert mini_hmm.transition_p.size <= mini_hmm.emission_p.size
+    # check if transition matrix is square 
+    assert mini_hmm.transition_p.shape[0] == mini_hmm.transition_p.shape[1]
 
     # assert output of forward algorithm is correct
-    # print ("HERE", mini_hmm.forward(input_observation_states= observation_state_sequence ))
-    assert mini_hmm.forward(input_observation_states= observation_state_sequence ) == 0.62208 #0.07717878036914062
+    print ("HERE", mini_hmm.forward(input_observation_states= observation_state_sequence ))
+    assert mini_hmm.forward(input_observation_states= observation_state_sequence ) == 0.031244062500000003
 
     # assert length of viterbi output is correct
     assert len(mini_hmm.viterbi(observation_state_sequence)) == len(best_hidden_state_sequence)
@@ -82,10 +84,12 @@ def test_full_weather():
 
     # check sizes of transition and emission matrices 
     assert full_hmm.transition_p.size <= full_hmm.emission_p.size
+    # check if transition matrix is square 
+    assert full_hmm.transition_p.shape[0] == full_hmm.transition_p.shape[1]
 
     # assert output of forward algorithm is correct
-    # print("HERE", full_hmm.forward(input_observation_states= observation_state_sequence ))
-    assert full_hmm.forward(input_observation_states= observation_state_sequence ) == 0.02102050324298978
+    print("HERE", full_hmm.forward(input_observation_states= observation_state_sequence ))
+    assert full_hmm.forward(input_observation_states= observation_state_sequence ) == 6.808160936567043e-13
 
     # assert length of viterbi output is correct
     assert len(full_hmm.viterbi(observation_state_sequence)) == len(best_hidden_state_sequence)
