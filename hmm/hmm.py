@@ -41,12 +41,6 @@ class HiddenMarkovModel:
             forward_probability (float): forward probability (likelihood) for the input observed sequence  
         """        
         # Step 1. Initialize variables
-        # print("observation states:", input_observation_states)
-        # print("observation states dict:", self.observation_states_dict)
-        # print("hidden states:", self.hidden_states)
-        # print("transition matrix", self.transition_p)
-        # print("emission matrix", self.emission_p)
-        # print("hidden dict", self.hidden_states_dict)
         forward_probabilities = np.zeros( (len(input_observation_states), len(self.hidden_states))  )
        
         # Step 2. Calculate probabilities
@@ -64,15 +58,9 @@ class HiddenMarkovModel:
                     #  recursion step, looks at the previousforward probabilities
                     fwd_gen = [ij_transition * forward_probabilities[i - 1, k ]  for k in range(len(self.hidden_states))]
                     forward_probabilities[i,j] = np.sum(  np.fromiter(
-                        # forward_probabilities[i - 1, k ] * self.transition_p[j, self.observation_states_dict[obs_state]] for k in range(len(self.hidden_states))
                         fwd_gen, dtype=float
                         )
                     )
-
-        fwd_hmm_seq = []
-        for row in forward_probabilities: # transpose matrix, get columns of original matrix (rows of transpose matrix)
-            # print(row, np.max(row), self.hidden_states[np.argmax(row)])
-            fwd_hmm_seq.append(self.hidden_states[np.argmax(row)])
 
         # Step 3. Return final probability 
         return np.sum(forward_probabilities[-1, :])
@@ -101,8 +89,7 @@ class HiddenMarkovModel:
                 if i == 0:
                     viterbi_table[i,j] = self.prior_p[j] * self.emission_p[j, self.observation_states_dict[obs_state]] # use prior to get emission probability
                 else:
-                    # forward_probabilities[t, j] = np.sum(forward_probabilities[t - 1, i] * self.transition_p[i, j] * self.emission_p[j, self.observation_states_dict[obs]] for i in range(len(self.hidden_states)))
-                    # print(j, obs_state, self.observation_states_dict[obs_state] )
+
                     emission_component = self.emission_p[j, self.observation_states_dict[obs_state] ] 
 
                     transition_component = self.transition_p[j, np.argmax(viterbi_table[i-1])  ] # looks at probability of transition

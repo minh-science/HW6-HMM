@@ -114,8 +114,7 @@ def test_full_weather():
 
     # assert output of viterbi is correct
     # assert [i for i in full_hmm.viterbi(observation_state_sequence)] == [j for j in best_hidden_state_sequence]
-    # print( [i for i in full_hmm.viterbi(observation_state_sequence)])
-    # print( [j for j in best_hidden_state_sequence] ) 
+    print([ i for i in zip( full_hmm.viterbi(observation_state_sequence),best_hidden_state_sequence ) ])
 
 
 test_full_weather()
