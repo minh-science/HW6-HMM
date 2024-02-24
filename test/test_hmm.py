@@ -50,6 +50,29 @@ def test_mini_weather():
     # assert output of viterbi is correct
     assert [i for i in mini_hmm.viterbi(observation_state_sequence)] == [j for j in best_hidden_state_sequence]
 
+    # edge case 
+    edge_hmm = HiddenMarkovModel(
+        observation_states= np.array(["T", "H"]),
+        hidden_states= np.array(["F", "L"]), 
+        prior_p= np.array([0.5, 0.5]),
+        transition_p= np.array([[0.6, 0.4],
+                                [0.4, 0.6]]),
+        emission_p = np.array([[0.5, 0.5],
+                            [0.7, 0.3]])
+        )
+    observation_state_sequence = np.array(["T", "H", "T", "H", "H", "H", "T", "H", "T", "T", "H" ])
+    print(edge_hmm.forward(input_observation_states=observation_state_sequence))
+    print(edge_hmm.viterbi(decode_observation_states= observation_state_sequence ) )
+
+    # the coin is fair 
+    observation_state_sequence = np.array(["H", "H", "H", "H", "H", "T", "H", "T", "H", "T"])
+    print(edge_hmm.viterbi(decode_observation_states= observation_state_sequence ) )
+
+    # the coin is obviously loaded
+    observation_state_sequence = np.array(["T", "T", "T", "T", "T", "T", "T"])
+    # print(edge_hmm.forward(input_observation_states=observation_state_sequence))
+    assert edge_hmm.viterbi(decode_observation_states= observation_state_sequence ) == ['L', 'L', 'L', 'L', 'L', 'L', 'L']
+
 test_mini_weather()
 
 

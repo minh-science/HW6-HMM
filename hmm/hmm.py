@@ -58,7 +58,7 @@ class HiddenMarkovModel:
                     # forward_probabilities[t, j] = np.sum(forward_probabilities[t - 1, i] * self.transition_p[i, j] * self.emission_p[j, self.observation_states_dict[obs]] for i in range(len(self.hidden_states)))
                     emission_component = self.emission_p[j, self.observation_states_dict[obs_state] ] 
 
-                    transition_component = self.transition_p[np.argmax(forward_probabilities[i-1]), j  ] # looks at probability of transition
+                    transition_component = self.transition_p[j, np.argmax(forward_probabilities[i-1])  ] # looks at probability of transition
                     
                     ij_transition =  emission_component * transition_component
                     #  recursion step, looks at the previousforward probabilities
@@ -105,10 +105,10 @@ class HiddenMarkovModel:
                     # print(j, obs_state, self.observation_states_dict[obs_state] )
                     emission_component = self.emission_p[j, self.observation_states_dict[obs_state] ] 
 
-                    # transition_component = self.transition_p[j, self.observation_states_dict[obs_state]]
+                    transition_component = self.transition_p[j, np.argmax(viterbi_table[i-1])  ] # looks at probability of transition
                     
                     #  recursion step, looks at the previousforward probabilities
-                    fwd_gen = [emission_component * viterbi_table[i - 1, k ]  for k in range(len(self.hidden_states))]
+                    fwd_gen = [emission_component * transition_component * viterbi_table[i - 1, k ]  for k in range(len(self.hidden_states))]
                     viterbi_table[i,j] = np.sum(  np.fromiter(
                         fwd_gen, dtype=float
                         )
@@ -134,15 +134,22 @@ edge_hmm = HiddenMarkovModel(
     emission_p = np.array([[0.5, 0.5],
                            [0.7, 0.3]])
     )
-
 observation_state_sequence = np.array(["T", "H", "T", "H", "H", "H", "T", "H", "T", "T", "H" ])
-
 transition_p = np.array([[0.6, 0.4],
                          [0.4, 0.6]])
 emission_p = np.array([[0.5, 0.5], 
                        [0.8, 0.2]])
 print(edge_hmm.forward(input_observation_states=observation_state_sequence))
-# print(edge_hmm.viterbi(decode_observation_states= observation_state_sequence ) )
+print(edge_hmm.viterbi(decode_observation_states= observation_state_sequence ) )
+
+
+observation_state_sequence = np.array(["T", "H", "H", "H"])
+print(edge_hmm.forward(input_observation_states=observation_state_sequence))
+print(edge_hmm.viterbi(decode_observation_states= observation_state_sequence ) )
+
+observation_state_sequence = np.array(["T", "H", "H", "T", "H", "T", "T"])
+print(edge_hmm.forward(input_observation_states=observation_state_sequence))
+print(edge_hmm.viterbi(decode_observation_states= observation_state_sequence ) )
 
 # mini dataset testing 
 
