@@ -49,21 +49,16 @@ class HiddenMarkovModel:
                 if i == 0:
                     forward_probabilities[i,j] = self.prior_p[j] * self.emission_p[j, self.observation_states_dict[obs_state]] # use prior to get emission probability
                 else:
-                    # forward_probabilities[t, j] = np.sum(forward_probabilities[t - 1, i] * self.transition_p[i, j] * self.emission_p[j, self.observation_states_dict[obs]] for i in range(len(self.hidden_states)))
                     emission_component = self.emission_p[j, self.observation_states_dict[obs_state] ] 
-
-                    transition_component = self.transition_p[j, np.argmax(forward_probabilities[i-1])  ] # looks at probability of transition
-                    
-                    ij_transition =  emission_component * transition_component
+                    transition_component = self.transition_p[j, np.argmax(forward_probabilities[i-1])  ] # probabity of hidden state transition
+                    ij_transition =  emission_component * transition_component 
                     #  recursion step, looks at the previousforward probabilities
-                    fwd_gen = [ij_transition * forward_probabilities[i - 1, k ]  for k in range(len(self.hidden_states))]
-                    forward_probabilities[i,j] = np.sum(  np.fromiter(
-                        fwd_gen, dtype=float
-                        )
+                    fwd_gen = [ij_transition * forward_probabilities[i - 1, k ]  for k in range(len(self.hidden_states))] # uses prior prior state to calculate next probability 
+                    forward_probabilities[i,j] = np.sum(  np.fromiter( fwd_gen, dtype=float) # sum of probabilities at the new end of trellis 
                     )
 
         # Step 3. Return final probability 
-        return np.sum(forward_probabilities[-1, :])
+        return np.sum(forward_probabilities[-1, :]) # sum of probabilities at the end of the trellis 
 
 
     def viterbi(self, decode_observation_states: np.ndarray) -> list:
@@ -90,7 +85,7 @@ class HiddenMarkovModel:
                     viterbi_table[i,j] = self.prior_p[j] * self.emission_p[j, self.observation_states_dict[obs_state]] # use prior to get emission probability
                 else:
 
-                    emission_component = self.emission_p[j, self.observation_states_dict[obs_state] ] 
+                    emission_component = self.emission_p[j, self.observation_states_dict[obs_state] ] # h
 
                     transition_component = self.transition_p[j, np.argmax(viterbi_table[i-1])  ] # looks at probability of transition
                     
