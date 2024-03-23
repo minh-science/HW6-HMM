@@ -102,7 +102,6 @@ def test_full_weather():
     assert full_hmm.transition_p.shape[0] == full_hmm.transition_p.shape[1]
 
     # assert output of forward algorithm is correct
-    # print("HERE", full_hmm.forward(input_observation_states= observation_state_sequence ))
     assert full_hmm.forward(input_observation_states= observation_state_sequence ) == 1.82721504536107e-12
 
     # assert length of viterbi output is correct
@@ -110,7 +109,6 @@ def test_full_weather():
 
     # assert output of viterbi is correct
     assert [i for i in full_hmm.viterbi(observation_state_sequence)] == [j for j in best_hidden_state_sequence]
-    # print([ i for i in zip( full_hmm.viterbi(observation_state_sequence),best_hidden_state_sequence ) ])
 test_full_weather()
 
 
