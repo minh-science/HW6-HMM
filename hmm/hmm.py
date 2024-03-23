@@ -49,10 +49,10 @@ class HiddenMarkovModel:
                 if i == 0:
                     forward_probabilities[i,j] = self.prior_p[j] * self.emission_p[j, self.observation_states_dict[obs_state]] # use prior to get emission probability
                 else:
-                    emission_component = self.emission_p[j, self.observation_states_dict[obs_state] ] 
+                    emission_component = self.emission_p[j, self.observation_states_dict[obs_state] ] # probabilty of emission
                     transition_component = self.transition_p[j, np.argmax(forward_probabilities[i-1])  ] # probabity of hidden state transition
-                    ij_transition =  emission_component * transition_component 
-                    #  recursion step, looks at the previousforward probabilities
+                    ij_transition =  emission_component * transition_component # emission * transition 
+                    #  recursion step, looks at the previous forward probabilities
                     fwd_gen = [ij_transition * forward_probabilities[i - 1, k ]  for k in range(len(self.hidden_states))] # uses prior prior state to calculate next probability 
                     forward_probabilities[i,j] = np.sum(  np.fromiter( fwd_gen, dtype=float) # sum of probabilities at the new end of trellis 
                     )

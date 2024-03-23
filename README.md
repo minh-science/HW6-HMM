@@ -3,7 +3,9 @@
 In this assignment, you'll implement the Forward and Viterbi Algorithms (dynamic programming). 
 
 # DESCRIPTION OF METHODS
-The Forward and Viterbi algorithms are implementations of dynamic programming that return the most probable states given a series of observations described by a Hidden Markov Model. 
+The Forward and Viterbi algorithms are implementations of dynamic programming that return the most probable states given a series of observations described by a Hidden Markov Model. Markov models assume that the events occuring at a state only depend on the outcome of the prior state. 
+- The forward algorithm computes joint probability of outcomes in a hidden Markov model
+- The Viterbi algorithm uses observations to calculate the most likely sequence of states that returns the original observations.
 
 
 # Assignment
